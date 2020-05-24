@@ -1,0 +1,56 @@
+plugins {
+    id 'org.springframework.boot' version '2.2.5.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+    id 'war'
+}
+
+group = 'com.seroga'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    developmentOnly
+    runtimeClasspath {
+        extendsFrom developmentOnly
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    // tomcat deps will go into WEB-INF/lib-provided
+    // if enabled, cannot run with 'intellij-gradle', only with 'gradle'
+//    providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+}
+
+test {
+    useJUnitPlatform()
+}
+
+def warConfig = {
+    dependsOn('frontend:build')
+    webInf {
+        from project('frontend').buildDir
+        into 'classes/static'
+    }
+}
+
+bootWar {
+    configure warConfig
+//    archiveClassifier = 'bootable' // to avoid clashing with 'war' task output
+}
+
+//war { // no tomcat and springboot runner dependency
+//    configure warConfig
+//    enabled = true
+//}
+
