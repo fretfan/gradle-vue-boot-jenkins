@@ -8,6 +8,6 @@ public class SomeApi {
 
   @GetMapping("/1")
   public String one() {
-    return "I am working!";
+    return "I am working2!";
   }
 }
