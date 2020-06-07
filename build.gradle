@@ -54,3 +54,10 @@ bootWar {
 //    enabled = true
 //}
 
+
+task runTest {
+    doLast {
+        println 'RUNNING TESTS!'
+        println 'Actually NOT!'
+    }
+}
