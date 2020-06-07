@@ -3,7 +3,7 @@
 #echo 'killing if pid if running'
 
 rm -fv nohup.out
-nohup > nohup.out java -jar ../build/libs/gradle-vue-boot-jenkins-0.0.1-SNAPSHOT.war &
+export BUILD_ID=dontKillMe && nohup > nohup.out java -jar ../build/libs/gradle-vue-boot-jenkins-0.0.1-SNAPSHOT.war &
 app_pid=$!
 echo $app_pid > app.pid
 echo "starting app with PID: '$app_pid'"
