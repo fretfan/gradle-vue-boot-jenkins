@@ -30,6 +30,7 @@ dependencies {
     testImplementation('org.springframework.boot:spring-boot-starter-test') {
         exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
     }
+    testImplementation group: 'com.codeborne', name: 'selenide', version: '5.12.2'
 }
 
 test {
@@ -58,6 +59,18 @@ bootWar {
 task runTest {
     doLast {
         println 'RUNNING TESTS!'
+        sleep(5000)
         println 'Actually NOT!'
     }
+}
+
+task runTest2(type: Test) {
+    description = 'Runs UI tests.'
+    group = 'verification'
+//    includeTags = 'UItest'
+
+
+//    testClassesDirs = sourceSets.output.classesDirs
+//    classpath = sourceSets.intTest.runtimeClasspath
+//    shouldRunAfter test
 }

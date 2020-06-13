@@ -5,10 +5,12 @@ export BUILD_ID=dontKillMe #otherwise jenkins kills java -jar, when build finish
 
 rm -fv nohup.out
 nohup > nohup.out java -jar ../build/libs/gradle-vue-boot-jenkins-0.0.1-SNAPSHOT.war &
-app_pid=$!
+app_pid=$! #PID of last command
 echo $app_pid > app.pid
 echo "starting app with PID: '$app_pid'"
 echo "sleeping"
+
+#####CHECK if app started successfully
 sleep 2 # wait for process to start
 echo "checking if app is up"
 tries=0
@@ -26,9 +28,9 @@ do
     sleep 1
     tries=$(( tries + 1 ))
     echo $tries
-    if [ $tries -ge 4 ]
+    if [ $tries -ge 10 ]
     then
-      echo "tried 5 times, exit"
+      echo "tried 10 times, exit"
       break
      fi
 done
