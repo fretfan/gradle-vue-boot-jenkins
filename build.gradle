@@ -59,7 +59,7 @@ bootWar {
 task runTest {
     doLast {
         println 'RUNNING TESTS!'
-        sleep(5000)
+        sleep(3000)
         println 'Actually NOT!'
     }
 }

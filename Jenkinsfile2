@@ -1,0 +1,36 @@
+pipeline {
+    agent any
+    parameters {
+        string(name: 'BRANCH', defaultValue: 'master')
+        booleanParam(name: 'clearWorkspace', defaultValue: false, 'description': 'Clear workspace after build?')
+    }
+    stages {
+        stage('clone') {
+            steps {
+              git branch: "$params.BRANCH", url: 'git@github.com:fretfan/gradle-vue-boot-jenkins.git'
+            }
+        }
+        stage('build') {
+            steps {
+                sh './gradlew build'
+            }
+        }
+        stage('run app + ui test') {
+            steps {
+                sh 'cd scripts; ./run.sh'
+                sh './gradlew runTest'
+            }
+        }
+    }
+    post {
+        always {
+            script {
+                if (params.clearWorkspace) {
+                    cleanWs()
+                } else {
+                  echo 'Not cleaning workspace'
+                }
+            }
+        }
+    }
+}
