@@ -1,0 +1,21 @@
+pipeline {
+  agent any
+  stages {
+    stage('clone') {
+      steps {
+        git 'git@github.com:fretfan/gradle-vue-boot-jenkins.git'
+      }
+    }
+    stage('build') {
+        steps {
+          sh './gradlew build'
+        }
+    }
+    stage('run app + ui test') {
+        steps {
+          sh 'cd scripts; ./run.sh'
+          sh './gradlew runTest'
+        }
+    }
+  }
+}
