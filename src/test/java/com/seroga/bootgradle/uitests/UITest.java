@@ -15,7 +15,7 @@ class UITest {
     open("localhost:8081");
     $("#text-div").shouldHave(text("before"));
     $("#the-button").click();
-    $("#text-div").shouldHave(text("after2"));
+    $("#text-div").shouldHave(text("after"));
   }
 
 }
