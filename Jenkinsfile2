@@ -5,32 +5,38 @@ pipeline {
         booleanParam(name: 'clearWorkspace', defaultValue: false, 'description': 'Clear workspace after build?')
     }
     stages {
-        stage('clone') {
+        stage('pre') {
             steps {
-              git branch: "$params.BRANCH", url: 'git@github.com:fretfan/gradle-vue-boot-jenkins.git'
+                script {
+                    if (params.clearWorkspace) {
+                        cleanWs()
+                    } else {
+                        echo 'Not cleaning workspace'
+                    }
+                }
+            }
+        }
+        stage('clone all repos') {
+            steps {
+                git branch: "$params.BRANCH", url: 'git@github.com:fretfan/gradle-vue-boot-jenkins.git'
+                dir('other-repo') {
+                    git 'git@github.com:fretfan/hazelcast-tests.git'
+                }
             }
         }
         stage('build') {
             steps {
+                sh 'ls -lh other-repo'
                 sh './gradlew build'
             }
         }
-        stage('run app + ui test') {
-            steps {
-                sh 'cd scripts; ./run.sh'
-                sh './gradlew runTest'
-            }
-        }
+//        stage('run app + ui test') {
+//            steps {
+//                sh 'cd scripts; ./run.sh'
+//                sh './gradlew runTest'
+////                todo sh 'kill_server.sh'? or remove BUILD_ID=dontKillMe from run.sh
+//            }
+//        }
     }
-    post {
-        always {
-            script {
-                if (params.clearWorkspace) {
-                    cleanWs()
-                } else {
-                  echo 'Not cleaning workspace'
-                }
-            }
-        }
-    }
+
 }
