@@ -1,7 +1,7 @@
 #!/bin/bash
 #cat app.pid
 #echo 'killing if pid if running'
-export BUILD_ID=dontKillMe #otherwise jenkins kills java -jar, when build finishes
+#export BUILD_ID=dontKillMe #otherwise jenkins kills java -jar, when build finishes
 
 #kill app running on 8081
 echo 'killing app on 8081'

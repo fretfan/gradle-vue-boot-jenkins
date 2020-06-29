@@ -35,6 +35,7 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    exclude 'com/seroga/bootgradle/uitests/**'
 }
 
 def warConfig = {
@@ -56,21 +57,17 @@ bootWar {
 //}
 
 
-task runTest {
-    doLast {
-        println 'RUNNING TESTS!'
-        sleep(3000)
-        println 'Actually NOT!'
-    }
-}
+//task runTest {
+//    doLast {
+//        println 'RUNNING TESTS!'
+//        sleep(3000)
+//        println 'Actually NOT!'
+//    }
+//}
 
-task runTest2(type: Test) {
+task runUiTests(type: Test) {
+    useJUnitPlatform()
     description = 'Runs UI tests.'
     group = 'verification'
-//    includeTags = 'UItest'
-
-
-//    testClassesDirs = sourceSets.output.classesDirs
-//    classpath = sourceSets.intTest.runtimeClasspath
-//    shouldRunAfter test
+    include 'com/seroga/bootgradle/uitests/**'
 }

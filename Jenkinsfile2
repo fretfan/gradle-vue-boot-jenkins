@@ -2,7 +2,7 @@ pipeline {
     agent any
     parameters {
         string(name: 'BRANCH', defaultValue: 'master')
-        booleanParam(name: 'clearWorkspace', defaultValue: false, 'description': 'Clear workspace after build?')
+        booleanParam(name: 'clearWorkspace', defaultValue: false, 'description': 'Clear workspace before build?')
     }
     stages {
         stage('pre') {
@@ -30,13 +30,13 @@ pipeline {
                 sh './gradlew build'
             }
         }
-//        stage('run app + ui test') {
-//            steps {
-//                sh 'cd scripts; ./run.sh'
-//                sh './gradlew runTest'
-////                todo sh 'kill_server.sh'? or remove BUILD_ID=dontKillMe from run.sh
-//            }
-//        }
+        stage('run app + ui test') {
+            steps {
+                sh 'cd scripts; ./run.sh'
+                sh './gradlew runUiTests'
+//                todo sh 'kill_server.sh'? or remove BUILD_ID=dontKillMe from run.sh
+            }
+        }
     }
 
 }
