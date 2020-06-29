@@ -34,7 +34,6 @@ pipeline {
             steps {
                 sh 'cd scripts; ./run.sh'
                 sh './gradlew runUiTests'
-//                todo sh 'kill_server.sh'? or remove BUILD_ID=dontKillMe from run.sh
             }
         }
     }
