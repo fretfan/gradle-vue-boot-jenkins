@@ -14,13 +14,22 @@ configurations {
     runtimeClasspath {
         extendsFrom developmentOnly
     }
+    intTestImplementation.extendsFrom implementation
+    intTestRuntimeOnly.extendsFrom runtimeOnly
 }
 
 repositories {
     mavenCentral()
 }
+sourceSets {
+    intTest {
+        compileClasspath += sourceSets.main.output
+        runtimeClasspath += sourceSets.main.output
+    }
+}
 
 dependencies {
+    intTestImplementation 'junit:junit:4.13'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     // tomcat deps will go into WEB-INF/lib-provided
     // if enabled, cannot run with 'intellij-gradle', only with 'gradle'
@@ -70,4 +79,12 @@ task runUiTests(type: Test) {
     description = 'Runs UI tests.'
     group = 'verification'
     include 'com/seroga/bootgradle/uitests/**'
+}
+
+task integrationTest(type: Test) {
+    description = 'Runs integration tests.'
+    group = 'verification'
+
+    testClassesDirs = sourceSets.intTest.output.classesDirs
+    classpath = sourceSets.intTest.runtimeClasspath
 }
