@@ -67,3 +67,20 @@ pipelineJob('job3') {
     }
   }
 }
+
+listView('asd') {
+  jobs {
+    name('job1')
+    name('job2')
+    name('job3')
+  }
+  columns {
+    status()
+    weather()
+    name()
+    lastSuccess()
+    lastFailure()
+    lastDuration()
+    buildButton()
+  }
+}
