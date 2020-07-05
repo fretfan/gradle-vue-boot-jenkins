@@ -1,6 +1,8 @@
 // this script is used by JOB-DSL plugin in jenkins to regenerate jobs
 pipelineJob('job1') {
-  concurrentBuild(false)
+  properties {
+    disableConcurrentBuilds()
+  }
   logRotator {
     numToKeep(5)
   }
@@ -21,7 +23,9 @@ pipelineJob('job1') {
 }
 
 pipelineJob('job2') {
-  concurrentBuild(false)
+  properties {
+    disableConcurrentBuilds()
+  }
   logRotator {
     numToKeep(5)
   }
@@ -42,7 +46,9 @@ pipelineJob('job2') {
 }
 
 pipelineJob('job3') {
-  concurrentBuild(false)
+  properties {
+    disableConcurrentBuilds()
+  }
   logRotator {
     numToKeep(5)
   }
