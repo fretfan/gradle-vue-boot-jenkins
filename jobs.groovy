@@ -1,3 +1,4 @@
+// this script is used by JOB-DSL plugin in jenkins to regenerate jobs
 pipelineJob('job1') {
   concurrentBuild(false)
   logRotator {
